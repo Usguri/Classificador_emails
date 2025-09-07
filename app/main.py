@@ -19,11 +19,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-BASE_DIR = os.path.dirname(__file__) # get folder in the source the project
-templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates")) # render page dynamics
-app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static") # serve css
+BASE_DIR = os.path.dirname(__file__)
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
 
-@app.get("/", response_class=HTMLResponse) # when a user access page /, call index.html
+@app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
@@ -36,16 +36,16 @@ async def classify_endpoint(text: str = Form(None), file: UploadFile = None):
     payload = text or extraiconteudo
     if not payload:
         return JSONResponse({"error": "Nenhum texto foi enviado."}, status_code=400)    
-    result = Classifica_responde(payload) # processa o conteudo
+    result = Classifica_responde(payload)
     result["chars"] = len(payload)
 
     return JSONResponse(result)
 
 def read_file_content(file: UploadFile) -> str:
-    filename = file.filename or "" # get name file
-    content = file.file.read() # read content file
-    if filename.lower().endswith(".pdf"): # verifica se é pdf        
-        return extract_text(io.BytesIO(content)) or "" # extrai texto 
+    filename = file.filename or ""
+    content = file.file.read()
+    if filename.lower().endswith(".pdf"):
+        return extract_text(io.BytesIO(content)) or ""
     
     try:
         return content.decode("utf-8", errors="ignore")
