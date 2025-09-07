@@ -1,0 +1,125 @@
+/*Variáveis de Tema*/
+:root {
+    --bg: #0f172a;
+    --card: #111827;
+    --ink: #e5e7eb;
+    --muted: #9ca3af;
+    --accent: #22d3ee;
+}
+
+/*Reset & Base*/
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+}
+
+/*Layout & Estrutura*/
+header {
+    padding: 32px 16px;
+    text-align: center;
+}
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px 40px;
+    display: grid;
+    gap: 16px;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 20px 0 40px;
+}
+
+/*Tipografia*/
+h1 {
+    margin: 0 0 8px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+h1 span {
+    color: var(--accent);
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin: 12px 0 6px;
+}
+
+.or {
+    margin: 12px 0;
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#hint {
+    color: var(--muted);
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+/*Componentes*/
+.card {
+    background: var(--card);
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+textarea {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #374151;
+    background: #0b1220;
+    color: var(--ink);
+    padding: 10px;
+    resize: vertical;
+}
+
+input[type="file"] {
+    display: block;
+}
+
+button {
+    margin-top: 14px;
+    background: var(--accent);
+    border: none;
+    color: #002831;
+    font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+}
+
+button:hover {
+    filter: brightness(1.05);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+pre {
+    white-space: pre-wrap;
+    background: #0b1220;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    padding: 12px;
+}

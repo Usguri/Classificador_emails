@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Classificador de e-mail</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Classificador de <span>e-mail</span></h1>
+    <p>Classifique emails (Produtivo/Improdutivo) e gere uma resposta sugerida.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Enviar email</h2>
+      <form id="form" enctype="multipart/form-data">
+        <label>Texto do email</label>
+        <textarea name="text" id="text" rows="8" placeholder="Cole aqui o conteúdo do email..."></textarea>
+
+        <div class="or">ou</div>
+
+        <label>Arquivo (.txt ou .pdf)</label>
+        <input type="file" name="file" id="file" accept=".txt,.pdf" />
+
+        <button type="submit">Processar</button>
+      </form>
+      <div id="hint">Dica: Você pode enviar apenas texto, apenas arquivo, ou ambos (o texto terá prioridade).</div>
+    </section>
+
+    <section class="card" id="result" style="display:none;">
+      <h2>Resultado</h2>
+      <div class="grid">
+        <div><strong>Categoria:</strong> <span id="category"></span></div>
+        <div><strong>Confiança:</strong> <span id="confidence"></span></div>
+        <div><strong>Provider:</strong> <span id="provider"></span></div>
+        <div><strong>Tamanho do texto:</strong> <span id="chars"></span> chars</div>
+      </div>
+      <h3>Resposta sugerida</h3>
+      <pre id="response"></pre>
+    </section>
+  </main>
+
+  <footer>
+    <small>Desafio de classificação de e-mail</small>
+  </footer>
+
+  <script>
+
+    let form = document.getElementById("form")
+    let result = document.getElementById("result")
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault()
+
+      let formData = new FormData(form)
+      let res = await fetch("/classify", { method: "POST", body: formData })
+      let data = await res.json()
+
+      if (!res.ok) {
+        alert(data.error || "Falha ao processar.");
+        return;
+      }
+
+      document.getElementById("category").textContent = data.category
+      document.getElementById("confidence").textContent = data.confidence
+      document.getElementById("provider").textContent = data.provider
+      document.getElementById("chars").textContent = data.chars
+      document.getElementById("response").textContent = data.response
+
+      result.style.display = "block"
+    })
+
+  </script>
+</body>
+
+</html>
